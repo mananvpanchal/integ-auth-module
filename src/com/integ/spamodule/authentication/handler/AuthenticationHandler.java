@@ -2,6 +2,7 @@ package com.integ.spamodule.authentication.handler;
 
 import com.integ.spamodule.authentication.authen.AuthenticatorFactory;
 import com.integ.spamodule.authentication.exception.AuthenticationException;
+import com.integ.spamodule.authentication.model.AuthenInfo;
 import com.integ.spamodule.authentication.model.Credential;
 import org.apache.log4j.Logger;
 
@@ -24,12 +25,15 @@ public class AuthenticationHandler {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String doLogin(Credential cred) {
-        String returnValue;
+        String returnValue=null;
         try {
-            returnValue = AuthenticatorFactory.getFactory().getAuthenticator().authenticate(cred);
+            boolean authenticated = AuthenticatorFactory.getFactory().getAuthenticator().authenticate(cred.getUsername(), cred.getPassword());
+            if(authenticated) {
+                returnValue = "token";
+            }
         } catch (AuthenticationException ex) {
-            LOG.error("Error during authentication", ex);
-            returnValue = "failure";
+            LOG.error("Error during authentication / token generation", ex);
+            returnValue = "login_failure";
         }
         return returnValue;
     }

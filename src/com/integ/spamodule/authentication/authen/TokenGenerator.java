@@ -4,11 +4,10 @@ import com.integ.spamodule.authentication.model.AuthenInfo;
 
 /**
  * Author: Manan
- * Date: 15-12-2015 04:07
+ * Date: 16-12-2015 07:55
  */
 
-public interface Authenticator {
+public interface TokenGenerator {
 
-    boolean authenticate(String username, String password);
-
+    String generateToken(String username);
 }
