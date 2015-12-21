@@ -19,8 +19,8 @@ public class PasswordHashUtil {
     public static final int SALT_INDEX = 1;
     public static final int PBKDF2_INDEX = 2;
 
-    public static String generateSalt() {
-        SecureRandom random = new SecureRandom();
+    public static String generateSalt() throws NoSuchAlgorithmException{
+        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
         byte[] salt = new byte[SALT_BYTE_SIZE];
         random.nextBytes(salt);
         return toHex(salt);

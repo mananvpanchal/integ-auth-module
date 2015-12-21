@@ -1,0 +1,27 @@
+package com.integ.spamodule.authentication.application;
+
+import com.integ.spamodule.authentication.handler.AuthenticationHandler;
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+import java.util.Set;
+
+/**
+ * Author: Manan
+ * Date: 17-12-2015 20:06
+ */
+
+@ApplicationPath("webresources")
+public class WebApplication extends Application {
+
+    @Override
+    public Set<Class<?>> getClasses() {
+        Set<Class<?>> resources = new java.util.HashSet<Class<?>>();
+        addRestResourceClasses(resources);
+        return resources;
+    }
+
+    private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(AuthenticationHandler.class);
+    }
+}

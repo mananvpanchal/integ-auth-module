@@ -1,4 +1,4 @@
-package com.integ.spamodule;
+package com.integ.spamodule.authentication;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

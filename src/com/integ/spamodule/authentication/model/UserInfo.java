@@ -5,10 +5,9 @@ package com.integ.spamodule.authentication.model;
  * Date: 16-12-2015 07:48
  */
 
-public class AuthenInfo {
+public class UserInfo {
 
     protected String username;
-    protected String password;
     protected String userType;
     protected boolean authenticated;
 
