@@ -1,6 +1,7 @@
 package com.integ.spamodule.authentication.application;
 
 import com.integ.spamodule.authentication.handler.AuthenticationHandler;
+import com.integ.spamodule.authentication.handler.UserHandler;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -23,5 +24,6 @@ public class WebApplication extends Application {
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(AuthenticationHandler.class);
+        resources.add(UserHandler.class);
     }
 }

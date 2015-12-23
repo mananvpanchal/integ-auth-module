@@ -8,10 +8,7 @@ import com.integ.spamodule.authentication.model.Credential;
 import com.integ.spamodule.authentication.model.UserInfo;
 import org.apache.log4j.Logger;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -30,8 +27,15 @@ public class AuthenticationHandler {
         String token = null;
         UserInfo userInfo = AuthenticatorFactory.getFactory().getAuthenticator().authenticate(cred.getUsername(), cred.getPassword());
         if (userInfo.isAuthenticated()) {
+            LOG.debug("User authenticated");
             token = TokenGeneratorFactory.getFactory().getTokenGenerator().generateToken(userInfo, 30);
         }
         return token;
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getHello() {
+        return "Hello!";
     }
 }

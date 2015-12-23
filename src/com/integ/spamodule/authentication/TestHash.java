@@ -4,6 +4,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Base64;
 
 /**
  * Author: Manan
@@ -13,10 +14,12 @@ import java.security.SecureRandom;
 public class TestHash {
     public static void main(String[] args) throws Exception {
         SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[24];
+        byte[] salt = new byte[32];
         random.nextBytes(salt);
 
-        PBEKeySpec spec = new PBEKeySpec("test123".toCharArray(), salt, 1000, 24 * 8);
+        System.out.println(toHex(salt));
+
+        PBEKeySpec spec = new PBEKeySpec("1234567890123".toCharArray(), salt, 1000, 32 * 8);
         SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         byte[] hash = skf.generateSecret(spec).getEncoded();
         System.out.println(toHex(hash));

@@ -22,9 +22,9 @@ public class DefaultAuthenticator implements Authenticator {
         try {
             database = DatabaseFactory.getInstance().createDatabase();
             database.open();
-            ResultSet set = database.executePreparedQuery("select usertype, salt, password from users where username = ?", new Object[]{username});
+            ResultSet set = database.executePreparedQuery("select usertype, pswd_salt, password from spa_users where username = ?", new Object[]{username});
             if (set.next()) {
-                String saltHash = set.getString("salt");
+                String saltHash = set.getString("pswd_salt");
                 String passwordHash = set.getString("password");
                 userInfo.setUsername(username);
                 userInfo.setUserType(set.getString("usertype"));

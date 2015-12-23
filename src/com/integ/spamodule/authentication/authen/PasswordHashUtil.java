@@ -15,17 +15,12 @@ public class PasswordHashUtil {
     public static final int HASH_BYTE_SIZE = 32;
     public static final int PBKDF2_ITERATIONS = 1000;
 
-    public static final int ITERATION_INDEX = 0;
-    public static final int SALT_INDEX = 1;
-    public static final int PBKDF2_INDEX = 2;
-
     public static String generateSalt() throws NoSuchAlgorithmException{
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
         byte[] salt = new byte[SALT_BYTE_SIZE];
         random.nextBytes(salt);
         return toHex(salt);
     }
-
 
     public static String createHash(String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         return createHash(password.toCharArray(), salt);
