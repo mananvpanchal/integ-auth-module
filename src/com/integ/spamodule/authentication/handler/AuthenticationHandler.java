@@ -2,10 +2,8 @@ package com.integ.spamodule.authentication.handler;
 
 import com.integ.spamodule.authentication.authen.AuthenticatorFactory;
 import com.integ.spamodule.authentication.authen.TokenGeneratorFactory;
-import com.integ.spamodule.authentication.exception.AuthenticationException;
-import com.integ.spamodule.authentication.exception.TokenGenerationException;
 import com.integ.spamodule.authentication.model.Credential;
-import com.integ.spamodule.authentication.model.UserInfo;
+import com.integ.spamodule.authentication.model.User;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
@@ -25,10 +23,10 @@ public class AuthenticationHandler {
     @Produces(MediaType.APPLICATION_JSON)
     public String doLogin(Credential cred) throws Exception {
         String token = null;
-        UserInfo userInfo = AuthenticatorFactory.getFactory().getAuthenticator().authenticate(cred.getUsername(), cred.getPassword());
-        if (userInfo.isAuthenticated()) {
+        User user = AuthenticatorFactory.getFactory().getAuthenticator().authenticate(cred.getUsername(), cred.getPassword());
+        if (user.isAuthenticated()) {
             LOG.debug("User authenticated");
-            token = TokenGeneratorFactory.getFactory().getTokenGenerator().generateToken(userInfo, 30);
+            token = TokenGeneratorFactory.getFactory().getTokenGenerator().generateToken(user, 30);
         }
         return token;
     }

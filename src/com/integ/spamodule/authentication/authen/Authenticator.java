@@ -1,7 +1,7 @@
 package com.integ.spamodule.authentication.authen;
 
 import com.integ.spamodule.authentication.exception.AuthenticationException;
-import com.integ.spamodule.authentication.model.UserInfo;
+import com.integ.spamodule.authentication.model.User;
 
 /**
  * Author: Manan
@@ -10,6 +10,6 @@ import com.integ.spamodule.authentication.model.UserInfo;
 
 public interface Authenticator {
 
-    UserInfo authenticate(String username, String password) throws AuthenticationException;
+    User authenticate(String username, String password) throws AuthenticationException;
 
 }

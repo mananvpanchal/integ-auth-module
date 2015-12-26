@@ -1,7 +1,7 @@
 package com.integ.spamodule.authentication.authen;
 
 import com.integ.spamodule.authentication.exception.TokenGenerationException;
-import com.integ.spamodule.authentication.model.UserInfo;
+import com.integ.spamodule.authentication.model.User;
 
 /**
  * Author: Manan
@@ -10,5 +10,5 @@ import com.integ.spamodule.authentication.model.UserInfo;
 
 public interface TokenGenerator {
 
-    String generateToken(UserInfo userInfo, int lifeMinute) throws TokenGenerationException;
+    String generateToken(User user, int lifeMinute) throws TokenGenerationException;
 }

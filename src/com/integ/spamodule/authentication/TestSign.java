@@ -2,12 +2,6 @@ package com.integ.spamodule.authentication;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.FileInputStream;
-import java.security.KeyStore;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.Signature;
-import java.security.cert.CertificateFactory;
 import java.util.Base64;
 import java.util.Date;
 
@@ -19,7 +13,7 @@ import java.util.Date;
 public class TestSign {
 
     public static void main(String[] args) throws Exception {
-        FileInputStream inputStream = new FileInputStream("F:\\Integ\\authen-module\\integ.jks");
+        /*FileInputStream inputStream = new FileInputStream("F:\\Integ\\authen-module\\integ.jks");
         KeyStore keystore = KeyStore.getInstance("JKS");
         keystore.load(inputStream, "12345678".toCharArray());
         inputStream.close();
@@ -38,7 +32,7 @@ public class TestSign {
         signer.update((encodedTokenHeader + "." + encodedTokenPayload).getBytes());
         byte[] signatureArray = signer.sign();
         //System.out.println(new String(signatureArray));
-        System.out.println("Encoded sign: "+new String(Base64.getEncoder().encode(signatureArray)));
+        System.out.println("Encoded sign: "+new String(Base64.getEncoder().encode(signatureArray)));*/
 
         /*inputStream = new FileInputStream("F:\\Integ\\authen-module\\integ.cer");
         CertificateFactory cf = CertificateFactory.getInstance("X.509");
@@ -52,10 +46,20 @@ public class TestSign {
 
         System.out.println(signer.verify(signatureArray));*/
 
-        /*Mac mac = Mac.getInstance("HmacSHA256");
-        mac.init(new SecretKeySpec("12345678".getBytes(), "HmacSHA256"));
-        byte[] result = mac.doFinal("Manan Panchal".getBytes());
-        System.out.println(new String(result));
-        System.out.println(new String(Base64.getEncoder().encode(result)));*/
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec("qwertyasdf".getBytes(), "HmacSHA256"));
+        String tokenHeader = "{\"typ\":\"JWT\",\"alg\":\"RS256\"}";
+        long issuingTime = new Date().getTime();
+        long expirationTime = issuingTime + 30 * 60 * 1000;
+        String tokenPayload = "{\"iss\":\"INTEG\",\"exp\":\"" + expirationTime + "\",\"iat\":\"" + issuingTime + "\",\"usr\",\"manan\",\"utp\":\"admin\"}";
+        String encodedTokenHeader = new String(Base64.getEncoder().encode(tokenHeader.getBytes()));
+        String encodedTokenPayload = new String(Base64.getEncoder().encode(tokenPayload.getBytes()));
+        byte[] result = mac.doFinal((encodedTokenHeader + "." + encodedTokenPayload).getBytes());
+        System.out.println("First value: "+new String(Base64.getEncoder().encode(result)));
+
+        mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec("qwertyasdf".getBytes(), "HmacSHA256"));
+        result = mac.doFinal((encodedTokenHeader + "." + encodedTokenPayload).getBytes());
+        System.out.println("Second value: " + new String(Base64.getEncoder().encode(result)));
     }
 }

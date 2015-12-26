@@ -1,7 +1,7 @@
 package com.integ.spamodule.authentication.authen;
 
 import com.integ.spamodule.authentication.exception.AuthenticationException;
-import com.integ.spamodule.authentication.model.UserInfo;
+import com.integ.spamodule.authentication.model.User;
 import com.integ.spamodule.database.Database;
 import com.integ.spamodule.database.DatabaseFactory;
 
@@ -15,10 +15,10 @@ import java.sql.ResultSet;
 public class DefaultAuthenticator implements Authenticator {
 
     @Override
-    public UserInfo authenticate(String username, String password) throws AuthenticationException {
+    public User authenticate(String username, String password) throws AuthenticationException {
         Database database = null;
         boolean error = false;
-        UserInfo userInfo = new UserInfo();
+        User user = new User();
         try {
             database = DatabaseFactory.getInstance().createDatabase();
             database.open();
@@ -26,9 +26,9 @@ public class DefaultAuthenticator implements Authenticator {
             if (set.next()) {
                 String saltHash = set.getString("pswd_salt");
                 String passwordHash = set.getString("password");
-                userInfo.setUsername(username);
-                userInfo.setUserType(set.getString("usertype"));
-                userInfo.setAuthenticated(PasswordHashUtil.validatePassword(password, saltHash, passwordHash));
+                user.setUsername(username);
+                user.setUserType(set.getString("usertype"));
+                user.setAuthenticated(PasswordHashUtil.validatePassword(password, saltHash, passwordHash));
             }
             database.commit();
         } catch (Exception ex) {
@@ -39,6 +39,6 @@ public class DefaultAuthenticator implements Authenticator {
                 database.close(!error);
             }
         }
-        return userInfo;
+        return user;
     }
 }
