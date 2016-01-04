@@ -35,7 +35,8 @@ public class DefaultTokenGenerator implements TokenGenerator {
             Mac mac = Mac.getInstance("HmacSHA256");
             mac.init(new SecretKeySpec(hmacSecret.getBytes(), "HmacSHA256"));
             byte[] hmacBytes = mac.doFinal((encodedTokenHeader + "." + encodedTokenPayload).getBytes());
-            return encodedTokenHeader + "." + encodedTokenPayload + "." + new String(hmacBytes);
+            String encodedSign = new String(Base64.getEncoder().encode(hmacBytes));
+            return encodedTokenHeader + "." + encodedTokenPayload + "." + encodedSign;
         } catch (NoSuchAlgorithmException | InvalidKeyException ex) {
             throw new TokenGenerationException("Error generating token", ex);
         }
