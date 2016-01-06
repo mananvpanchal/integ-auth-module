@@ -12,7 +12,7 @@ import java.util.Set;
  * Date: 17-12-2015 20:06
  */
 
-@ApplicationPath("webresources")
+@ApplicationPath("auth")
 public class WebApplication extends Application {
 
     @Override
