@@ -33,9 +33,7 @@ Login = connect(
 	(dispatch) => {
 		return {
 			doLogin: (username, password) => {
-				dispatch(login(username, password)).then((res) => {
-					console.log(res.data);
-				});
+				dispatch(login(username, password));
 			}
 		}
 	}
