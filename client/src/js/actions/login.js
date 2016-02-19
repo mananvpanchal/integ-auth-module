@@ -9,7 +9,7 @@ axios.defaults.baseURL = 'http://train.integdev.com:9000';
 
 export default (username, password) => {
 	return {
-		type: Constants.DO_LOGIN,
-		cred: { username, password }
+		type: Constants.DO_LOGIN + Constants.SERVER,
+		cred: {username, password}
 	};
 };

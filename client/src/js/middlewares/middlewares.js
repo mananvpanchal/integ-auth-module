@@ -2,26 +2,35 @@
  * Created by Admin on 18-02-2016.
  */
 
+import Constants from '../constants';
 import axios from 'axios';
 
 export const axiosMiddleware = () => {
 	return (next) => {
 		return (action) => {
-			let startAction = Object.assign({}, action, {type: action.type + "_START"});
-			next(startAction);
-			axios.push(startAction.url, startAction.data)
-				.then(
-				(res) => {
-					let successAction = Object.assign({}, action, {type: action.type + "_SUCCESS", res: res.data});
-					next(successAction);
+			if( action.type.indexOf(Constants.SERVER)!== -1) {
+				let startAction = Object.assign({}, action, {type: action.type + Constants.START});
+				next(startAction);
+				let promise;
+				if(startAction.data === undefined) {
+					promise = axios.get(startAction.url);
+				} else {
+					promise = axios.push(startAction.url, startAction.data);
 				}
-			)
-				.catch(
-				(err) => {
-					let errorAction = Object.assign({}, action, {type: action.type + "_ERROR", err: err});
-					next(errorAction);
-				}
-			);
+				promise.then(
+					(res) => {
+						let successAction = Object.assign({}, action, {type: action.type + Constants.SUCCESS, res: res.data});
+						return next(successAction);
+					}
+				).catch(
+					(err) => {
+						let errorAction = Object.assign({}, action, {type: action.type + Constants.FAILURE, err: err});
+						return next(errorAction);
+					}
+				);
+			} else {
+				return next(action);
+			}
 		};
 	};
 };
