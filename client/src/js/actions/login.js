@@ -5,11 +5,19 @@
 import * as Constants from '../constants';
 import axios from 'axios';
 
+
 axios.defaults.baseURL = 'http://train.integdev.com:9000';
 
 export default (username, password) => {
 	return {
 		type: Constants.DO_LOGIN + Constants.SERVER,
-		cred: {username, password}
+		cred: {username, password},
+		url: 'abc',
+		onSuccess: (dispatch, action) => {
+			return action;
+		},
+		onFailure: (dispatch, action) => {
+			return action;
+		}
 	};
 };

@@ -27,7 +27,7 @@ let Login = ({ cred, doLogin }) => {
 Login = connect(
 	(state) => {
 		return {
-			cred: state
+			loadingFlag: state.loadingFlag
 		}
 	},
 	(dispatch) => {

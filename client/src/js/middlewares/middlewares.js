@@ -8,24 +8,35 @@ import axios from 'axios';
 export const axiosMiddleware = () => {
 	return (next) => {
 		return (action) => {
-			if( action.type.indexOf(Constants.SERVER)!== -1) {
+			if (action.type.indexOf(Constants.SERVER) !== -1) {
+				next(Constants.ACTION_START);
 				let startAction = Object.assign({}, action, {type: action.type + Constants.START});
 				next(startAction);
 				let promise;
-				if(startAction.data === undefined) {
-					promise = axios.get(startAction.url);
+				if (action.data === undefined) {
+					promise = axios.get(action.url);
 				} else {
-					promise = axios.push(startAction.url, startAction.data);
+					promise = axios.push(action.url, action.data);
 				}
 				promise.then(
 					(res) => {
-						let successAction = Object.assign({}, action, {type: action.type + Constants.SUCCESS, res: res.data});
-						return next(successAction);
+						next(Constants.ACTION_END);
+						let successAction = Object.assign({}, action, {type: action.type, res: res});
+						if(typeof action.onSuccess === 'function') {
+							return action.onSuccess(next, successAction);
+						} else {
+							return next(successAction);
+						}
 					}
 				).catch(
 					(err) => {
+						next(Constants.ACTION_END);
 						let errorAction = Object.assign({}, action, {type: action.type + Constants.FAILURE, err: err});
-						return next(errorAction);
+						if(typeof action.onFailure === 'function') {
+							return action.onFailure(next, errorAction);
+						} else {
+							return next(errorAction);
+						}
 					}
 				);
 			} else {

@@ -4,15 +4,13 @@
 
 import { createStore, combineReducers } from 'redux';
 import { applyMiddleware } from 'redux';
-import cred from './reducers/login';
-import testMiddleware from './middlewares/test';
-import testMiddleware2 from './middlewares/test2';
 import thunkMiddleware from 'redux-thunk';
 
-let createStoreWithMiddleware = applyMiddleware(thunkMiddleware, testMiddleware, testMiddleware2)(createStore);
+import { axiosMiddleware } from './middlewares/middlewares'
+import reducers from './reducers';
 
-//let finalReducer = combineReducers({ cred });
+let createStoreWithMiddleware = applyMiddleware(axiosMiddleware, thunkMiddleware)(createStore);
 
-export default createStoreWithMiddleware(cred);
+let finalReducer = combineReducers(reducers);
 
-//export default createStore(cred);
+export default createStoreWithMiddleware(finalReducer);
