@@ -3,7 +3,6 @@
  */
 
 export default {
-	XHR_ACTION: "@XHR_ACTION@",
 	ACTION_START: "@ACTION_START@",
 	ACTION_END: "@ACTION_END@",
 	START: "_START",
