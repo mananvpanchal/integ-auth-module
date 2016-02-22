@@ -6,10 +6,10 @@ import { createStore, combineReducers } from 'redux';
 import { applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-import { axiosMiddleware } from './middlewares/middlewares'
+import { axiosMiddleware, loggerMiddleware } from './middlewares/middlewares'
 import reducers from './reducers';
 
-let createStoreWithMiddleware = applyMiddleware(axiosMiddleware, thunkMiddleware)(createStore);
+let createStoreWithMiddleware = applyMiddleware(axiosMiddleware, thunkMiddleware, loggerMiddleware)(createStore);
 
 let finalReducer = combineReducers(reducers);
 

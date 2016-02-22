@@ -2,7 +2,7 @@
  * Created by Admin on 17-02-2016.
  */
 
-import * as Constants from '../constants';
+import Constants from '../constants';
 import axios from 'axios';
 
 
@@ -10,7 +10,7 @@ axios.defaults.baseURL = 'http://train.integdev.com:9000';
 
 const createXHRAction = (type, url, data) => {
 	let action = createDefaultAction(type, data);
-	return Object.assign(action, { xhr: true }, { url: url });
+	return Object.assign(action, { xhr: true, url: url });
 };
 
 const createNormalAction = (type, data) => {
@@ -20,8 +20,8 @@ const createNormalAction = (type, data) => {
 
 const createDefaultAction = (type, data) => {
 	return {
-		type,
-		data
+		type: type,
+		data: data
 	};
 };
 
@@ -43,9 +43,11 @@ export default (username, password) => {
 	return Object.assign(action, 
 		{
 			onSuccess: (dispatch, action) => {
+				alert('success');
 				return action;
 			},
 			onFailure: (dispatch, action) => {
+				alert('error');
 				return action;
 			}
 		});

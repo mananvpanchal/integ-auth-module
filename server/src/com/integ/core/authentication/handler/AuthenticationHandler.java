@@ -23,6 +23,7 @@ public class AuthenticationHandler {
     @Produces(MediaType.TEXT_PLAIN)
     public String doLogin(Credential cred) throws Exception {
         String token = null;
+        LOG.debug("Authenticating user...");
         User user = AuthenticatorFactory.getFactory().getAuthenticator().authenticate(cred.getUsername(), cred.getPassword());
         if (user.isAuthenticated()) {
             LOG.debug("User authenticated");

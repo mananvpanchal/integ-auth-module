@@ -46,3 +46,12 @@ export const axiosMiddleware = () => {
 		};
 	};
 };
+
+export const loggerMiddleware = () => {
+	return (next) => {
+		return (action) => {
+			console.log(action);
+			return next(action);
+		};
+	};
+};

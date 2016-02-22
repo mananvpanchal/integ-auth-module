@@ -31,12 +31,12 @@ public class TokenGeneratorFactory {
         if(tokenGenerator == null) {
             synchronized (this) {
                 if(tokenGenerator == null) {
-                    String authenticatorStr = System.getProperty("authenticator");
-                    if(authenticatorStr == null) {
+                    String tokenGeneratorStr = System.getProperty("tokengenerator");
+                    if(tokenGeneratorStr == null) {
                         tokenGenerator = new DefaultTokenGenerator();
                     } else {
                         try {
-                            tokenGenerator = (TokenGenerator) Class.forName(authenticatorStr).newInstance();
+                            tokenGenerator = (TokenGenerator) Class.forName(tokenGeneratorStr).newInstance();
                         } catch (Exception ex) {
                             throw new AuthenticationException("Exception in loading token generator", ex);
                         }
