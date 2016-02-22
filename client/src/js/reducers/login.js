@@ -5,7 +5,7 @@ import Constants from '../constants';
 
 export default (state = {}, action) => {
 	if(action.type == Constants.DO_LOGIN) {
-		return action.cred;
+		return action.data;
 	} else {
 		return state;
 	}

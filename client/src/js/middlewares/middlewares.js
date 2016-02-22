@@ -8,7 +8,7 @@ import axios from 'axios';
 export const axiosMiddleware = () => {
 	return (next) => {
 		return (action) => {
-			if (action.type.indexOf(Constants.SERVER) !== -1) {
+			if (action.type.indexOf(Constants.XHR_ACTION) !== -1) {
 				next(Constants.ACTION_START);
 				let startAction = Object.assign({}, action, {type: action.type + Constants.START});
 				next(startAction);
